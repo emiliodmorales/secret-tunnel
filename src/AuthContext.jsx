@@ -20,9 +20,11 @@ export function AuthProvider({ children }) {
       .then((response) => response.json())
       .then((result) => {
         try {
-          // alert(result.message);
-          setToken(result.token);
-          setLocation("TABLET");
+          console.log(result.message);
+          if (result.success) {
+            setToken(result.token);
+            setLocation("TABLET");
+          }
         } catch (e) {
           console.error(e);
         }
@@ -30,8 +32,28 @@ export function AuthProvider({ children }) {
   }
 
   // TODO: authenticate
+  function authenticate() {
+    fetch(API + "/authenticate", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        try {
+          console.log(result.message);
+          if (result.success) {
+            setLocation("TUNNEL");
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      });
+  }
 
-  const value = { location, signup };
+  const value = { location, signup, authenticate };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
