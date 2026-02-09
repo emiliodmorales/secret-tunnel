@@ -8,6 +8,15 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState();
   const [location, setLocation] = useState("GATE");
 
+  const storage = window.sessionStorage;
+  useEffect(() => {
+    const data = storage.getItem("token");
+    if (data) {
+      setToken(data);
+      setLocation("TABLET");
+    }
+  }, []);
+
   // TODO: signup
   function signup(username) {
     fetch(API + "/signup", {
@@ -22,6 +31,7 @@ export function AuthProvider({ children }) {
         try {
           console.log(result.message);
           if (result.success) {
+            storage.setItem("token", result.token);
             setToken(result.token);
             setLocation("TABLET");
           }
