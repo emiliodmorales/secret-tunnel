@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
       .then((response) => response.json())
       .then((result) => {
         try {
-          console.log(result.message);
+          alert(result.message);
           if (result.success) {
             storage.setItem("token", result.token);
             setToken(result.token);
@@ -53,7 +53,7 @@ export function AuthProvider({ children }) {
       .then((response) => response.json())
       .then((result) => {
         try {
-          console.log(result.message);
+          alert(result.message);
           if (result.success) {
             setLocation("TUNNEL");
           }
