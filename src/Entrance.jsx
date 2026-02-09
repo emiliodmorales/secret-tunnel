@@ -4,11 +4,7 @@ import { useAuth } from "./AuthContext";
 export default function Entrance() {
   // TODO: call signup when form is submitted
   const { signup } = useAuth();
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    const form = e.target;
-    const formData = new FormData(form);
+  function handleSubmit(formData) {
     const { username } = formData;
 
     signup(username);
@@ -27,7 +23,7 @@ export default function Entrance() {
         fixed on you. The one on the left opens its mouth, and with a deep,
         rumbling voice, it asks, "Who approaches? Speak your name."
       </p>
-      <form onSubmit={handleSubmit}>
+      <form action={handleSubmit}>
         <label>
           Name
           <input name="name" />
